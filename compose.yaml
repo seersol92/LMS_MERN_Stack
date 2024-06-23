@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./server
+    image: seersol92/lms_backend_api:latest
+    ports:
+      - "8002:8000"
+    env_file:
+      - ./server/.env
+    depends_on:
+      - mongo
+      - redis
+
+  mongo:
+    image: mongo
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "admin"
+      MONGO_INITDB_ROOT_PASSWORD: "admin"
+
+  redis:
+    container_name: redis_db
+    image: redis/redis-stack:latest
+    ports:
+      - 6379:6379
+      - 8001:8001
