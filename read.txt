@@ -1,0 +1,22 @@
+docker run  --network=my_custom_net -d --name redis-stack -p 6379:6379 -p 8001:8001  redis/redis-stack:latest
+
+docker run  -d  -p 8011:8000 --env-file .env seersol92/lms_backend_api:latest
+
+docker run -d  --name=mongodb_2  --network=my_custom_net -p 27070:27017 -e MONGO_INITDB_ROOT_USERNAME="admin" -e 
+MONGO_INITDB_ROOT_PASSWORD="admin" -v lms_mern_stack_lms-data:data/db  mongo
+
+docker exec -it  container name bash
+
+docker build -t seersol92/lms_backend_api .\server\
+
+
+#### Volumes
+
+docker volume create my-data
+
+docker volume ls
+
+docker volume inspect my-data
+
+docker volume rm  my-data
+

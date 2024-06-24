@@ -9,9 +9,9 @@
   },
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only server.ts",
-    "start":"node build/server.js",
+    "start":"npm run build && node build/server.js",
     "heroku-postbuild":"NPM_CONFIG_PRODUCTION=false",
-    "build":"tsc"
+    "build":"rimraf ./build && tsc"
   },
   "author": "shahriar sajeeb",
   "license": "ISC",

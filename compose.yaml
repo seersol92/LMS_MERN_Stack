@@ -5,12 +5,21 @@ services:
     build: ./server
     image: seersol92/lms_backend_api:latest
     ports:
-      - "8002:8000"
+      - "8001:8001"
     env_file:
       - ./server/.env
     depends_on:
       - mongo
       - redis
+    develop:
+      watch:
+      - path: ./server/package.json
+        action: rebuild
+      - path: ./server/package-lock.json
+        action: rebuild
+      - path: ./server
+        target: /app/
+        action: sync
 
   mongo:
     image: mongo
@@ -19,6 +28,10 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: "admin"
       MONGO_INITDB_ROOT_PASSWORD: "admin"
+    volumes:
+      #- ./data:/data/db #hosting volume mounting  
+      - lms-data:/data/db #local volume mounting 
+
 
   redis:
     container_name: redis_db
@@ -26,3 +39,7 @@ services:
     ports:
       - 6379:6379
       - 8001:8001
+
+volumes:
+  lms-data:
+    driver: local
